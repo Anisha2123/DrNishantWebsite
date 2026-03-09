@@ -412,7 +412,8 @@ export default function HeroRight({ visible: visibleProp }: Props) {
           font-weight: 500;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.45);
+          color: #3ab4a5;
+          // color: rgba(255, 255, 255, 0.45);
           margin-top: 6px;
           transition: color 0.4s ease;
         }
@@ -634,25 +635,32 @@ export default function HeroRight({ visible: visibleProp }: Props) {
           </div>
 
           {/* ── Stat Card 1: Experience ── */}
-          <div className={`hr-card hr-card-exp${visible ? " in" : ""}`}>
-            <div className="hr-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" strokeWidth="2">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-            </div>
-            <div className="hr-card-num">10+</div>
-            <div className="hr-card-lbl">Years</div>
-          </div>
+          <div className={`hr-card hr-card-exp ${visible ? "in" : ""}`}>
+  <div className="hr-card-content">
+    
+    {/* <div className="hr-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" strokeWidth="2">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    </div> */}
+
+    <div className="hr-card-text">
+      {/* <span className="hr-card-num">10+ years </span> */}
+      <span className="hr-card-lbl">10+ years Experience</span>
+    </div>
+
+  </div>
+</div>
 
           {/* ── Stat Card 2: Specialties ── */}
           <div className={`hr-card hr-card-spec${visible ? " in" : ""}`}>
-            <div className="hr-card-icon">
+            {/* <div className="hr-card-icon">
               <svg viewBox="0 0 24 24" fill="none" strokeWidth="2">
                 <path d="M12 2L15 10H23L17 15L19 23L12 18L5 23L7 15L1 10H9L12 2Z" />
               </svg>
-            </div>
-            <div className="hr-card-num">6</div>
-            <div className="hr-card-lbl">Specialities</div>
+            </div> */}
+            {/* <div className="hr-card-num">6</div> */}
+            <div className="hr-card-lbl">6 Specialities</div>
           </div>
 
           {/* ── Stat Card 3: Hospital ── */}

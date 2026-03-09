@@ -283,7 +283,7 @@ export default function WhyChoose() {
         }
       `}</style>
 
-      <section className="wc-section">
+      <section className="wc-section" id= "why-choose" >
         <div className="wc-header" ref={header.ref}>
           <div>
             <div className={`wc-eyebrow${header.inView ? " in" : ""}`}>

@@ -729,7 +729,7 @@ export default function DoctorProfile() {
         {/* ═══════════════════════════════
             ① INTRO BAND
         ═══════════════════════════════ */}
-        <section className="dp-section dp-intro" ref={hero.ref}>
+        <section className="dp-section dp-intro" ref={hero.ref} id="about">
           <div className="dp-intro-inner">
 
             {/* left */}
@@ -867,7 +867,7 @@ export default function DoctorProfile() {
             ② AREAS OF EXPERTISE
         ═══════════════════════════════ */}
         <section className="dp-section dp-exp-bg" ref={expSec.ref}>
-          <div className="dp-exp-header">
+          <div className="dp-exp-header" id="expertise">
             <div>
               <div className={`dp-eyebrow dp-fade${expSec.inView ? " in" : ""}`}>
                 <span className="dp-eyebrow-dash" />

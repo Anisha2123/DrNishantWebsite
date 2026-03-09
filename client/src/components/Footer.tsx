@@ -11,6 +11,7 @@
  */
 import { useState, useEffect } from "react";
 import { FaInstagram, FaPhone, FaFacebook, FaYoutube, FaLocationArrow, FaMailBulk, FaTimes } from "react-icons/fa";
+import "../App.css";
 
 export default function Footer() {
   const [visible, setVisible] = useState(false);
@@ -26,13 +27,12 @@ export default function Footer() {
   // Navigation sections
   const sections = [
     { label: "Home", id: "hero" },
-    { label: "Services", id: "services" },
-    { label: "Why Choose", id: "why-choose" },
-    { label: "About", id: "about" },
-    { label: "Expertise", id: "expertise" },
-    { label: "Experience", id: "experience" },
-    { label: "Education", id: "education" },
+  { label: "Treatments", id: "services" },
+  { label: "Why Choose Us", id: "why-choose" },
+  { label: "Dr. Nishant Verma", id: "about" },
+  { label: "Clinical Expertise", id: "expertise" },
   ];
+   
 
   // Service categories
   const services = [
@@ -316,13 +316,13 @@ export default function Footer() {
           gap: 8px;
         }
 
-        .footer-section-title::before {
-          content: '';
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: var(--primary-light);
-        }
+        // .footer-section-title::before {
+        //   content: '';
+        //   width: 3px;
+        //   height: 3px;
+        //   border-radius: 50%;
+        //   background: var(--primary-light);
+        // }
 
         .footer-link {
           display: block;

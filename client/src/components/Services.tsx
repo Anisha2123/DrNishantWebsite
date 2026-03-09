@@ -6,53 +6,161 @@ const PRIMARY_LIGHT = "#E8F5F3";
 const PRIMARY_MID = "#3AADA0";
 
 const services = [
+  
   {
-    id: 1,
-    code: "01",
-    title: "Hip & Knee Arthroplasty",
-    tagline: "Restore Movement. Reclaim Life.",
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
-        <ellipse cx="24" cy="16" rx="8" ry="10" />
-        <path d="M16 26c0 6 3 14 8 18M32 26c0 6-3 14-8 18" />
-        <path d="M14 22h20" />
-      </svg>
-    ),
-    overview:
-      "Hip and knee replacement surgery—arthroplasty—removes damaged joint surfaces and replaces them with precision-engineered implants. Modern techniques deliver long-lasting relief, faster recovery, and restored independence.",
-    conditions: [
-      "Advanced Osteoarthritis",
-      "Rheumatoid Arthritis",
-      "Post-Traumatic Arthritis",
-      "Severe Fractures",
-      "Avascular Necrosis",
-      "Long-standing Deformities",
+  id: 1,
+  code: "01",
+  title: "Hip Replacement",
+  tagline: "Restore Hip Mobility. Live Pain-Free.",
+  icon: (
+    <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
+      <ellipse cx="24" cy="16" rx="8" ry="10" />
+      <path d="M16 26c0 6 3 14 8 18M32 26c0 6-3 14-8 18" />
+      <path d="M14 22h20" />
+    </svg>
+  ),
+
+  overview:
+    "Hip replacement surgery is a procedure in which a damaged hip joint is replaced with an artificial implant made of metal, plastic, or ceramic. It is recommended for patients suffering from severe hip pain, joint damage, or mobility problems when medicines and physiotherapy no longer provide relief.",
+
+  conditions: [
+    "Osteoarthritis",
+    "Rheumatoid arthritis",
+    "Post-traumatic arthritis",
+    "Avascular necrosis",
+    "Severe hip fractures",
+    "Hip joint disorders"
+  ],
+
+  symptoms: [
+    "Constant hip pain",
+    "Difficulty walking or climbing stairs",
+    "Joint stiffness",
+    "Pain during night",
+    "No relief from medicines",
+    "Difficulty sitting, bending, or standing"
+  ],
+
+  consult: [
+    "Pain lasting more than 2–3 months",
+    "Pain affecting daily activities",
+    "X-ray showing narrowing of joint space"
+  ],
+
+  treatment: {
+    early: [
+      "Medicines",
+      "Physiotherapy",
+      "Weight reduction",
+      "Injections"
     ],
-    symptoms: [
-      "Constant joint pain, even at rest",
-      "Severe stiffness limiting daily activity",
-      "Difficulty walking or climbing stairs",
-      "Night pain disrupting sleep",
-      "No relief from medications or therapy",
-    ],
-    treatment: {
-      early: ["Medications", "Physiotherapy", "Weight Reduction", "Injections"],
-      advanced: ["Total Knee Replacement", "Total Hip Replacement", "Partial Replacement (selected cases)"],
-    },
-    recovery: "Walking begins within 24–48 hrs · Hospital stay 3–5 days · Full recovery 3–6 months · Implants last 15–25+ years",
-    whyChoose: [
-      "Expert in primary & revision arthroplasty",
-      "Patient-centered evaluation — surgery only when truly needed",
-      "Advanced surgical techniques: minimal blood loss, precise implant placement",
-      "Focus on long-term mobility and implant longevity",
-      "Comprehensive pre- and post-operative care",
-      "Transparent communication at every stage",
-    ],
-    consult: "Pain persisting 2–3 months · Limiting daily activity · X-ray showing significant joint space narrowing",
+
+    advanced: [
+      "Total Hip Replacement",
+      "Partial Hip Replacement",
+      "Hip Resurfacing Arthroplasty",
+      "Revision Hip Arthroplasty"
+    ]
   },
+
+  types: [
+    "Total Hip Replacement",
+    "Partial Hip Replacement (Hemiarthroplasty)",
+    "Hip Resurfacing Arthroplasty",
+    "Revision Hip Arthroplasty"
+  ],
+
+  recovery:
+    "Walking usually begins within 24–48 hours after surgery. Hospital stay is typically 2–5 days. Physiotherapy plays an important role in recovery. Full recovery usually takes 3–6 months depending on the patient’s health condition.",
+
+  risks: [
+    "Infection",
+    "Blood clots",
+    "Hip dislocation",
+    "Implant loosening over time",
+    "Nerve or blood vessel injury"
+  ],
+
+  whyChoose: [
+    "Advanced surgical techniques for precise implant placement",
+    "Personalized treatment plans",
+    "Focus on faster recovery and long-term mobility",
+    "Expertise in primary and revision hip replacement",
+    "Comprehensive post-operative care"
+  ]
+},
+{
+  id: 2,
+  code: "02",
+  title: "Knee Replacement",
+  tagline: "Walk Comfortably. Move Freely.",
+  icon: (
+    <svg viewBox="0 0 48 48" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="24" cy="14" r="6" />
+      <path d="M18 22c0 8 4 18 6 22M30 22c0 8-4 18-6 22" />
+      <path d="M14 22h20" />
+    </svg>
+  ),
+
+  overview:
+    "Knee replacement surgery replaces damaged cartilage and bone in the knee joint with artificial implants. It is recommended for patients suffering from severe knee pain, stiffness, and mobility limitations caused by arthritis or joint degeneration.",
+
+  conditions: [
+    "Osteoarthritis",
+    "Rheumatoid arthritis",
+    "Post-traumatic arthritis",
+    "Severe knee deformity",
+    "Chronic knee pain and degeneration"
+  ],
+
+  symptoms: [
+    "Severe knee pain while walking",
+    "Difficulty climbing stairs",
+    "Knee stiffness and swelling",
+    "Pain during rest or sleep",
+    "Reduced range of motion"
+  ],
+
+  treatment: {
+    early: [
+      "Medications",
+      "Physiotherapy",
+      "Lifestyle modification",
+      "Weight reduction",
+      "Joint injections"
+    ],
+
+    advanced: [
+      "Total Knee Replacement",
+      "Partial Knee Replacement",
+      "Revision Knee Replacement"
+    ]
+  },
+
+  recovery:
+    "Patients usually begin walking within 24–48 hours after surgery. Hospital stay is typically 3–5 days. With proper physiotherapy and rehabilitation, most patients regain full mobility within 3–6 months.",
+
+  risks: [
+    "Infection",
+    "Blood clots",
+    "Implant wear or loosening",
+    "Knee stiffness",
+    "Nerve injury"
+  ],
+
+  whyChoose: [
+    "Modern minimally invasive surgical techniques",
+    "Accurate implant alignment and placement",
+    "Focus on faster rehabilitation",
+    "Patient-centric treatment approach",
+    "Long-lasting joint replacement solutions"
+  ],
+
+  consult: "Persistent knee pain for months · Difficulty walking or climbing stairs · Knee stiffness limiting daily activities"
+},
   {
-    id: 2,
-    code: "02",
+    id: 3,
+    code: "03",
     title: "Arthroscopy – Knee / Shoulder",
     tagline: "Precision. Minimal Invasion. Maximum Recovery.",
     icon: (
@@ -96,8 +204,8 @@ const services = [
     consult: "Joint pain >2–3 weeks · Persistent swelling · Knee locking or giving way · Shoulder pain limiting arm movement",
   },
   {
-    id: 3,
-    code: "03",
+    id: 4,
+    code: "04",
     title: "Pelvis & Acetabulum Trauma",
     tagline: "Complex Fractures. Expert Reconstruction.",
     icon: (
@@ -141,8 +249,8 @@ const services = [
     consult: "Hip/pelvis pain after accident · Can't walk properly · Leg looks deformed · Increasing swelling or bruising",
   },
   {
-    id: 4,
-    code: "04",
+    id: 5,
+    code: "05",
     title: "Foot & Ankle Surgery",
     tagline: "Every Step, Engineered for You.",
     icon: (
@@ -185,8 +293,8 @@ const services = [
     consult: "Ankle pain >2–3 weeks · Can't bear weight · Ankle instability · Deformity or shape change visible",
   },
   {
-    id: 5,
-    code: "05",
+    id: 6,
+    code: "06",
     title: "Ilizarov & Limb Salvage",
     tagline: "Save the Limb. Rebuild the Life.",
     icon: (
@@ -232,8 +340,8 @@ const services = [
     consult: "Fracture not healing after months · Persistent infection · Limb appears shorter/crooked · Amputation has been suggested",
   },
   {
-    id: 6,
-    code: "06",
+    id: 7,
+    code: "07",
     title: "Complex Trauma Reconstruction",
     tagline: "High-Energy Trauma. Structured Reconstruction.",
     icon: (
@@ -558,7 +666,7 @@ export default function DrNishantServices() {
             padding: "clamp(40px, 8vw, 260px) clamp(16px, 5vw, 40px) clamp(20px, 5vw, 40px)",
           }}
         >
-          <div style={{ maxWidth: "600px" }}>
+          <div style={{ maxWidth: "600px" }} id="services" >
             <div
               style={{
                 fontFamily: "'DM Mono', monospace",

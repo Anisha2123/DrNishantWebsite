@@ -274,7 +274,7 @@ export default function HeroSection() {
         }
       `}</style>
 
-      <div className="hero" ref={heroRef}>
+      <div className="hero" id="hero" ref={heroRef}>
         <div className="hero-left">
           <div className={`tag${visible ? " in" : ""}`}>
             <span className="tag-dot" />
@@ -282,7 +282,7 @@ export default function HeroSection() {
           </div>
 
           <h1 className={`hero-name${visible ? " in" : ""}`}>
-            Dr. Nishant<br />Verma
+            Dr. Nishant Verma
           </h1>
 
           <p className={`hero-title${visible ? " in" : ""}`}>

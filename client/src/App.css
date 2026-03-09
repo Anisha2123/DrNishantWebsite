@@ -6,3 +6,9 @@
           color: var(--ink);
           overflow-x: hidden;
         } */
+html{
+  scroll-behavior: smooth;
+}
+ul,a{
+  list-style: none;
+}

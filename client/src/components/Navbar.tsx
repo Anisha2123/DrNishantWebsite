@@ -18,13 +18,12 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "Home", id: "hero" },
-    { label: "Services", id: "services" },
-    { label: "Why Choose", id: "why-choose" },
-    { label: "About", id: "about" },
-    { label: "Expertise", id: "expertise" },
-    { label: "Contact", id: "contact" },
-  ];
+  { label: "Home", id: "hero" },
+  { label: "Treatments", id: "services" },
+  { label: "Why Choose Us", id: "why-choose" },
+  { label: "Dr. Nishant Verma", id: "about" },
+  { label: "Clinical Expertise", id: "expertise" },
+];
 
   const handleNavClick = (id) => {
     setActiveLink(id);
