@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaChevronRight, FaTimes, FaArrowLeft } from "react-icons/fa";
+import { FaChevronRight, FaTimes, FaArrowLeft, FaBook } from "react-icons/fa";
 import { kneeModalContent } from "./kneeData";
 
 type ModalItem = {
@@ -27,18 +27,28 @@ export default function KneeReplacementGuide() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [history, setHistory] = useState<(string | null)[]>([]);
+  const [activeTab, setActiveTab] = useState<"image" | "content">("content");
 
   const modalContent: ModalContent = kneeModalContent as ModalContent;
 
   const openModal = (key: string) => {
     setHistory([...history, activeModal]);
     setActiveModal(key);
+    setActiveTab("content");
+    // Ensure content is visible on mobile
+    setTimeout(() => {
+      const contentTab = document.querySelector('.krg-modal-content-mobile-tab.active');
+      if (contentTab) {
+        contentTab.scrollTop = 0;
+      }
+    }, 0);
   };
 
   const closeModal = () => {
     if (history.length > 0) {
       setActiveModal(history[history.length - 1]);
       setHistory(history.slice(0, -1));
+      setActiveTab("content");
     } else {
       setActiveModal(null);
     }
@@ -52,24 +62,40 @@ export default function KneeReplacementGuide() {
 
   const renderContent = (content: string | undefined) => {
     if (typeof content === "string") {
-      return <div dangerouslySetInnerHTML={{ __html: content }} />;
+      return <div className="krg-html-content" dangerouslySetInnerHTML={{ __html: content }} />;
     }
     return content;
   };
 
+  const currentModal = activeModal && modalContent[activeModal];
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
         :root {
           --primary: #2D8C7F;
           --primary-dark: #1f6860;
           --primary-light: #E8F5F3;
-          --primary-muted: rgba(45,140,127,0.07);
-          --primary-border: rgba(45,140,127,0.2);
+          --primary-muted: rgba(45,140,127,0.08);
+          --primary-border: rgba(45,140,127,0.15);
+          --text-primary: #0f172a;
+          --text-secondary: #64748b;
+          --bg-light: #f8fafc;
+          --bg-lighter: #f1f5f9;
+          --border-color: #e2e8f0;
         }
 
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        /* ─────────────────────────────
+           STICKY BAR
+        ───────────────────────────── */
         .krg-sticky-bar {
           position: fixed;
           bottom: 2rem;
@@ -80,35 +106,42 @@ export default function KneeReplacementGuide() {
         .krg-trigger-btn {
           display: flex;
           align-items: center;
-          gap: 12px;
-          padding: 14px 22px;
+          gap: 10px;
+          padding: 12px 20px;
           background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
           color: #fff;
           border: none;
-          border-radius: 50px;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.9rem;
+          border-radius: 8px;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.875rem;
           font-weight: 600;
           cursor: pointer;
-          box-shadow: 0 8px 32px rgba(45, 140, 127, 0.3);
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          letter-spacing: 0.02em;
+          box-shadow: 0 10px 30px rgba(45, 140, 127, 0.25);
+          transition: all 0.2s ease;
+          letter-spacing: 0.01em;
         }
 
         .krg-trigger-btn:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 40px rgba(45, 140, 127, 0.4);
+          transform: translateY(-2px);
+          box-shadow: 0 15px 40px rgba(45, 140, 127, 0.35);
         }
 
+        .krg-trigger-btn:active {
+          transform: translateY(0);
+        }
+
+        /* ─────────────────────────────
+           MODAL BACKDROP
+        ───────────────────────────── */
         .krg-modal-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.5);
-          backdrop-filter: blur(4px);
+          background: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(6px);
           z-index: 45;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.4s, visibility 0.4s;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .krg-modal-backdrop.active {
@@ -116,21 +149,23 @@ export default function KneeReplacementGuide() {
           visibility: visible;
         }
 
+        /* ─────────────────────────────
+           MODAL CONTAINER
+        ───────────────────────────── */
         .krg-modal {
           position: fixed;
           top: 50%;
           left: 50%;
-          transform: translate(-50%, -50%) scale(0.8);
+          transform: translate(-50%, -50%) scale(0.95);
           opacity: 0;
           z-index: 50;
-          max-width: 90vw;
           width: 100%;
-          max-height: 85vh;
-          border-radius: 16px;
+          max-height: 90vh;
+          border-radius: 12px;
           background: #fff;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
           overflow: hidden;
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           pointer-events: none;
           display: flex;
           flex-direction: column;
@@ -142,107 +177,447 @@ export default function KneeReplacementGuide() {
           pointer-events: auto;
         }
 
-        .krg-modal-content {
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          overflow: hidden;
-          min-height: 0;
+        /* ─────────────────────────────
+           DESKTOP LAYOUT (1024px+)
+           Side-by-side: Image Left | Content Right
+        ───────────────────────────── */
+        @media (min-width: 1024px) {
+
+        
+          .krg-modal {
+            max-width: 1200px;
+            max-height: 85vh;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            grid-template-rows: auto 1fr auto;
+          }
+
+          .krg-modal-header {
+            grid-column: 1 / -1;
+            grid-row: 1;
+          }
+
+          .krg-modal-image-left {
+            grid-column: 1;
+            grid-row: 2;
+            width: 100%;
+            height: 100%;
+            display: block !important;
+            border-right: 1px solid var(--border-color);
+            overflow: hidden;
+            background: var(--bg-lighter);
+          }
+
+          .krg-modal-image-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.4s ease;
+          }
+
+          .krg-modal-image-left img:hover {
+            transform: scale(1.03);
+          }
+
+          .krg-modal-body {
+            grid-column: 2;
+            grid-row: 2;
+            padding: 2.5rem;
+            overflow-y: auto;
+          }
+
+          .krg-modal-header-tablet {
+            display: none !important;
+          }
+
+          .krg-tabs-mobile {
+            display: none !important;
+          }
+
+          .krg-modal-body-mobile {
+            display: none !important;
+          }
+
+          .krg-modal-footer {
+            grid-column: 1 / -1;
+            grid-row: 3;
+          }
         }
 
+        /* ─────────────────────────────
+           TABLET LAYOUT (769px - 1023px)
+        ───────────────────────────── */
+        @media (max-width: 1023px) and (min-width: 769px) {
+          .krg-modal {
+            max-width: 90vw;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+          }
+
+          .krg-modal-header-tablet {
+            display: flex !important;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-light);
+            flex-shrink: 0;
+          }
+
+          .krg-modal-image-tablet {
+            width: 120px;
+            height: 120px;
+            min-width: 120px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            display: block !important;
+          }
+
+          .krg-modal-title-section {
+            flex: 1;
+            min-width: 0;
+          }
+
+          .krg-modal-body {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            min-height: 0;
+          }
+
+          .krg-modal-header {
+            display: none !important;
+          }
+
+          .krg-tabs-mobile {
+            display: none !important;
+          }
+
+          .krg-modal-body-mobile {
+            display: none !important;
+          }
+
+          .krg-modal-image-left {
+            display: none !important;
+          }
+        }
+
+        /* ─────────────────────────────
+           MOBILE LAYOUT (≤768px)
+        ───────────────────────────── */
+        @media (max-width: 768px) {
+          .krg-modal {
+            max-width: 95vw;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+          }
+
+          .krg-modal-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            background: #fff;
+          }
+
+          .krg-modal-title {
+            font-size: 1.25rem;
+          }
+
+          .krg-tabs-mobile {
+            display: flex !important;
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+            gap: 0;
+            padding: 0;
+            flex-shrink: 0;
+          }
+
+          .krg-tab-btn-mobile {
+            flex: 1;
+            padding: 0.875rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            min-height: 44px;
+          }
+
+          .krg-tab-btn-mobile:hover {
+            color: var(--primary);
+            background: rgba(45, 140, 127, 0.04);
+          }
+
+          .krg-tab-btn-mobile.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+          }
+
+          .krg-modal-body-mobile {
+            display: flex !important;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+          }
+
+          .krg-modal-body-mobile-direct {
+            display: flex !important;
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            min-height: 0;
+            width: 100%;
+            flex-direction: column;
+          }
+
+          .krg-modal-image-mobile-tab {
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+          }
+
+          .krg-modal-image-mobile-tab.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .krg-modal-image-mobile-tab img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
+
+          .krg-modal-content-mobile-tab {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            min-height: 0;
+            width: 100%;
+          }
+
+          .krg-modal-content-mobile-tab.active {
+            display: block;
+          }
+
+          .krg-modal-header-tablet {
+            display: none !important;
+          }
+
+          .krg-modal-body {
+            display: none !important;
+          }
+
+          .krg-modal-image-left {
+            display: none !important;
+          }
+
+          .krg-items-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        /* ─────────────────────────────
+           MODAL HEADER STYLES
+        ───────────────────────────── */
         .krg-modal-header {
-          padding: 2rem;
-          border-bottom: 1px solid var(--primary-border);
-          background: linear-gradient(135deg, var(--primary-muted) 0%, rgba(45,140,127,0.03) 100%);
+          padding: 1.5rem;
+          border-bottom: 1px solid var(--border-color);
+          background: #fff;
           flex-shrink: 0;
         }
 
         .krg-modal-title {
-          font-family: 'Playfair Display', serif;
-          font-size: 2rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 1.5rem;
           font-weight: 700;
-          color: #1a1a1a;
+          color: var(--text-primary);
           margin-bottom: 0.5rem;
-          letter-spacing: -0.02em;
+          letter-spacing: -0.01em;
         }
 
         .krg-modal-subtitle {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.9rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.75rem;
           color: var(--primary);
-          letter-spacing: 0.05em;
+          letter-spacing: 0.08em;
           text-transform: uppercase;
-          font-weight: 500;
+          font-weight: 600;
         }
 
-        .krg-modal-image {
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
-          border-bottom: 1px solid var(--primary-border);
-          flex-shrink: 0;
-        }
-
+        /* ─────────────────────────────
+           MODAL BODY STYLES
+        ───────────────────────────── */
         .krg-modal-body {
-          flex: 1;
-          overflow-y: auto;
-          overflow-x: hidden;
-          padding: 2rem;
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.9375rem;
+          line-height: 1.7;
+          color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+          .krg-modal-body {
+            display: none !important;
+          }
+        }
+
+        .krg-html-content h3 {
+          color: var(--primary);
+          margin: 1.5rem 0 0.75rem;
+          font-size: 1.125rem;
+          font-weight: 600;
+        }
+
+        .krg-html-content h4 {
+          color: var(--text-primary);
+          margin: 1.25rem 0 0.5rem;
+          font-size: 1rem;
+          font-weight: 600;
+        }
+
+        .krg-html-content h5 {
+          color: var(--primary);
           font-size: 0.95rem;
-          line-height: 1.8;
-          color: #4a4a46;
-          min-height: 0;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+
+        .krg-html-content p {
+          margin-bottom: 1rem;
+          line-height: 1.7;
+        }
+
+        .krg-html-content ul {
+          list-style: none;
+          padding: 0;
+        }
+
+        .krg-html-content li {
+          margin-bottom: 0.75rem;
+          padding-left: 1.5rem;
+          position: relative;
+          line-height: 1.6;
+        }
+
+        .krg-html-content li:before {
+          content: "→";
+          position: absolute;
+          left: 0;
+          color: var(--primary);
+          font-weight: 600;
+        }
+
+        .krg-html-content div[style*="background"] {
+          background: var(--bg-light) !important;
+          border-left: 3px solid var(--primary) !important;
+          padding: 1rem !important;
+          border-radius: 6px !important;
+          margin-bottom: 1rem !important;
         }
 
         .krg-modal-body::-webkit-scrollbar {
-          width: 8px;
+          width: 6px;
         }
 
         .krg-modal-body::-webkit-scrollbar-track {
-          background: #f0f7f6;
+          background: transparent;
         }
 
         .krg-modal-body::-webkit-scrollbar-thumb {
-          background: var(--primary-border);
-          border-radius: 4px;
+          background: var(--border-color);
+          border-radius: 3px;
         }
 
+        .krg-modal-body::-webkit-scrollbar-thumb:hover {
+          background: var(--primary-border);
+        }
+
+        .krg-modal-content-mobile-tab::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .krg-modal-content-mobile-tab::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .krg-modal-content-mobile-tab::-webkit-scrollbar-thumb {
+          background: var(--border-color);
+          border-radius: 3px;
+        }
+
+        .krg-modal-content-mobile-tab::-webkit-scrollbar-thumb:hover {
+          background: var(--primary-border);
+        }
+
+        .krg-modal-body-mobile-direct::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .krg-modal-body-mobile-direct::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .krg-modal-body-mobile-direct::-webkit-scrollbar-thumb {
+          background: var(--border-color);
+          border-radius: 3px;
+        }
+
+        .krg-modal-body-mobile-direct::-webkit-scrollbar-thumb:hover {
+          background: var(--primary-border);
+        }
+
+        /* ─────────────────────────────
+           ITEMS GRID
+        ───────────────────────────── */
         .krg-items-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
           gap: 1rem;
+          margin-top: 0.5rem;
         }
 
         .krg-item-card {
           padding: 1.25rem;
-          border: 1px solid var(--primary-border);
+          border: 1px solid var(--border-color);
           border-radius: 8px;
           background: #fff;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.2s ease;
         }
 
         .krg-item-card:hover {
           border-color: var(--primary);
           background: var(--primary-muted);
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(45, 140, 127, 0.15);
+          box-shadow: 0 4px 12px rgba(45, 140, 127, 0.12);
         }
 
         .krg-item-name {
           font-weight: 600;
-          color: #1a1a1a;
+          color: var(--text-primary);
           margin-bottom: 0.5rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
+          gap: 0.5rem;
+          font-size: 0.95rem;
         }
 
         .krg-item-preview {
-          font-size: 0.85rem;
-          color: #7a7a75;
-          margin-bottom: 0.75rem;
+          font-size: 0.8125rem;
+          color: var(--text-secondary);
+          margin-bottom: 0;
           line-height: 1.5;
         }
 
@@ -250,21 +625,25 @@ export default function KneeReplacementGuide() {
           width: 16px;
           height: 16px;
           color: var(--primary);
-          transition: transform 0.3s ease;
+          transition: transform 0.2s ease;
+          flex-shrink: 0;
         }
 
         .krg-item-card:hover .krg-item-arrow {
-          transform: translateX(4px);
+          transform: translateX(3px);
         }
 
+        /* ─────────────────────────────
+           MODAL FOOTER
+        ───────────────────────────── */
         .krg-modal-footer {
-          padding: 1.5rem 2rem;
-          border-top: 1px solid var(--primary-border);
+          padding: 1.25rem 1.5rem;
+          border-top: 1px solid var(--border-color);
           display: flex;
-          gap: 1rem;
+          gap: 0.75rem;
           justify-content: flex-start;
           align-items: center;
-          background: #f7f9f8;
+          background: var(--bg-light);
           flex-shrink: 0;
         }
 
@@ -272,16 +651,29 @@ export default function KneeReplacementGuide() {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          padding: 12px 20px;
-          border-radius: 8px;
-          border: none;
-          font-family: 'DM Sans', sans-serif;
+          gap: 6px;
+          padding: 10px 16px;
+          border-radius: 6px;
+          border: 1px solid var(--border-color);
+          font-family: 'Inter', sans-serif;
           font-weight: 500;
-          font-size: 0.9rem;
+          font-size: 0.875rem;
           cursor: pointer;
-          transition: all 0.3s ease;
-          min-height: 44px;
+          transition: all 0.2s ease;
+          min-height: 40px;
+          white-space: nowrap;
+          background: #fff;
+          color: var(--text-primary);
+        }
+
+        .krg-btn:hover {
+          background: var(--bg-light);
+          border-color: var(--primary);
+          color: var(--primary);
+        }
+
+        .krg-btn:active {
+          transform: scale(0.98);
         }
 
         .krg-btn-back {
@@ -293,59 +685,74 @@ export default function KneeReplacementGuide() {
         .krg-btn-back:hover {
           background: var(--primary);
           color: white;
-          transform: translateX(-2px);
+          border-color: var(--primary);
         }
 
         .krg-btn-close {
           background: transparent;
-          color: var(--primary);
-          border: 1px solid var(--primary-border);
+          color: var(--text-secondary);
+          border: 1px solid var(--border-color);
           margin-left: auto;
         }
 
         .krg-btn-close:hover {
-          background: var(--primary-muted);
+          background: var(--bg-light);
+          color: var(--text-primary);
+          border-color: var(--primary);
         }
 
-        @media (max-width: 768px) {
+        /* ─────────────────────────────
+           RESPONSIVE ADJUSTMENTS
+        ───────────────────────────── */
+        @media (max-width: 480px) {
           .krg-sticky-bar {
             bottom: 1rem;
             right: 1rem;
           }
 
           .krg-trigger-btn {
-            padding: 12px 16px;
-            font-size: 0.8rem;
+            padding: 10px 14px;
+            font-size: 0.8125rem;
+            gap: 8px;
           }
 
           .krg-modal {
-            max-width: 95vw;
-            max-height: 85vh;
+            max-width: 98vw;
+            max-height: 80vh;
           }
 
           .krg-modal-header {
-            padding: 1.5rem;
+            padding: 1rem;
           }
 
           .krg-modal-title {
-            font-size: 1.5rem;
+            font-size: 1.125rem;
           }
 
-          .krg-modal-body {
-            padding: 1.5rem;
+          .krg-modal-body,
+          .krg-modal-content-mobile-tab {
+            padding: 1rem;
+            font-size: 0.875rem;
           }
 
-          .krg-items-grid {
-            grid-template-columns: 1fr;
+          .krg-btn {
+            padding: 8px 12px;
+            font-size: 0.8125rem;
+            min-height: 36px;
           }
 
           .krg-btn-close {
-            margin-left: 0;
             width: 100%;
+            margin-left: 0;
+          }
+
+          .krg-items-grid {
+            gap: 0.75rem;
           }
         }
       `}</style>
 
+      {/* STICKY TRIGGER BUTTON */}
       <div className="krg-sticky-bar">
         <button
           className="krg-trigger-btn"
@@ -353,48 +760,159 @@ export default function KneeReplacementGuide() {
             setIsOpen(!isOpen);
             setActiveModal(!isOpen ? "main" : null);
             setHistory([]);
+            setActiveTab("content");
           }}
+          aria-label="Open Knee Replacement Guide"
         >
-          {!isOpen ? "📘 Total Knee Replacement" : "✕"}
+          <FaBook size={16} />
+          {!isOpen ? "Knee Guide" : "Close"}
         </button>
       </div>
 
+      {/* MODAL BACKDROP */}
       <div
         className={`krg-modal-backdrop${isOpen ? " active" : ""}`}
         onClick={resetModals}
       />
 
+      {/* MODAL */}
       <div className={`krg-modal${activeModal ? " active" : ""}`}>
-        <div className="krg-modal-content">
-          {activeModal && modalContent[activeModal] && (
-            <>
-              <div className="krg-modal-header">
-                <div className="krg-modal-subtitle">
-                  {modalContent[activeModal].parent === "main" ? "Guide" : "Details"}
-                </div>
-                <h2 className="krg-modal-title">
-                  {modalContent[activeModal].title}
-                </h2>
+        {currentModal && (
+          <>
+            {/* ─── DESKTOP & TABLET HEADER ─── */}
+            <div className="krg-modal-header">
+              <div className="krg-modal-subtitle">
+                {currentModal.parent === "main" ? "Guide" : "Details"}
               </div>
+              <h2 className="krg-modal-title">{currentModal.title}</h2>
+            </div>
 
-              {modalContent[activeModal].image && (
+            {/* ─── TABLET HEADER (Inline Image) ─── */}
+            {currentModal.image && (
+              <div className="krg-modal-header-tablet">
                 <img
-                  src={modalContent[activeModal].image}
-                  alt={modalContent[activeModal].title}
-                  className="krg-modal-image"
+                  src={currentModal.image}
+                  alt={currentModal.title}
+                  className="krg-modal-image-tablet"
                 />
+                <div className="krg-modal-title-section">
+                  <div className="krg-modal-subtitle">
+                    {currentModal.parent === "main" ? "Guide" : "Details"}
+                  </div>
+                  <h2 className="krg-modal-title">{currentModal.title}</h2>
+                </div>
+              </div>
+            )}
+
+            {/* ─── MOBILE TAB BUTTONS (Only for detail pages with content) ─── */}
+            {currentModal.image && currentModal.content && (
+              <div className="krg-tabs-mobile">
+                <button
+                  className={`krg-tab-btn-mobile ${activeTab === "image" ? "active" : ""}`}
+                  onClick={() => setActiveTab("image")}
+                >
+                  📸 Image
+                </button>
+                <button
+                  className={`krg-tab-btn-mobile ${activeTab === "content" ? "active" : ""}`}
+                  onClick={() => setActiveTab("content")}
+                >
+                  📄 Content
+                </button>
+              </div>
+            )}
+
+            {/* ─── DESKTOP: IMAGE ON LEFT ─── */}
+            {currentModal.image && (
+              <div className="krg-modal-image-left">
+                <img
+                  src={currentModal.image}
+                  alt={currentModal.title}
+                />
+              </div>
+            )}
+
+            {/* ─── DESKTOP & TABLET: CONTENT BODY ─── */}
+            <div className="krg-modal-body">
+              {currentModal.description && (
+                <p style={{ marginBottom: "1.5rem", fontStyle: "italic" }}>
+                  {currentModal.description}
+                </p>
               )}
 
-              <div className="krg-modal-body">
-                {modalContent[activeModal].description && (
+              {currentModal.sections ? (
+                <div className="krg-items-grid">
+                  {currentModal.sections.map((section) => (
+                    <div
+                      key={section.key}
+                      className="krg-item-card"
+                      onClick={() => openModal(section.key)}
+                    >
+                      <div className="krg-item-name">
+                        {section.label}
+                        <FaChevronRight className="krg-item-arrow" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : currentModal.items ? (
+                <div className="krg-items-grid">
+                  {currentModal.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="krg-item-card"
+                      onClick={() => openModal(item.key)}
+                    >
+                      <div className="krg-item-name">
+                        {item.name}
+                        <FaChevronRight className="krg-item-arrow" />
+                      </div>
+                      <p className="krg-item-preview">{item.preview}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : currentModal.content ? (
+                renderContent(currentModal.content)
+              ) : null}
+            </div>
+
+            {/* ─── MOBILE: TABBED CONTENT (Only when there are tabs) ─── */}
+            {currentModal.image && currentModal.content && (
+              <div className="krg-modal-body-mobile">
+                {/* Image Tab */}
+                {currentModal.image && (
+                  <div className={`krg-modal-image-mobile-tab${activeTab === "image" ? " active" : ""}`}>
+                    <img
+                      src={currentModal.image}
+                      alt={currentModal.title}
+                    />
+                  </div>
+                )}
+
+                {/* Content Tab */}
+                <div className={`krg-modal-content-mobile-tab${activeTab === "content" ? " active" : ""}`}>
+                  {currentModal.description && (
+                    <p style={{ marginBottom: "1.5rem", fontStyle: "italic" }}>
+                      {currentModal.description}
+                    </p>
+                  )}
+                  {renderContent(currentModal.content)}
+                </div>
+              </div>
+            )}
+
+            {/* ─── MOBILE: DIRECT CONTENT (For category modals without tabs) ─── */}
+            {(!currentModal.image || !currentModal.content) && (
+              <div className="krg-modal-body-mobile-direct">
+                {currentModal.description && (
                   <p style={{ marginBottom: "1.5rem", fontStyle: "italic" }}>
-                    {modalContent[activeModal].description}
+                    {currentModal.description}
                   </p>
                 )}
 
-                {modalContent[activeModal].sections ? (
+                {currentModal.sections ? (
                   <div className="krg-items-grid">
-                    {modalContent[activeModal].sections!.map((section) => (
+                    {currentModal.sections.map((section) => (
                       <div
                         key={section.key}
                         className="krg-item-card"
@@ -407,9 +925,9 @@ export default function KneeReplacementGuide() {
                       </div>
                     ))}
                   </div>
-                ) : modalContent[activeModal].items ? (
+                ) : currentModal.items ? (
                   <div className="krg-items-grid">
-                    {modalContent[activeModal].items!.map((item) => (
+                    {currentModal.items.map((item) => (
                       <div
                         key={item.id}
                         className="krg-item-card"
@@ -423,24 +941,23 @@ export default function KneeReplacementGuide() {
                       </div>
                     ))}
                   </div>
-                ) : (
-                  renderContent(modalContent[activeModal].content)
-                )}
+                ) : null}
               </div>
+            )}
 
-              <div className="krg-modal-footer">
-                {history.length > 0 && (
-                  <button className="krg-btn krg-btn-back" onClick={closeModal}>
-                    <FaArrowLeft /> Back
-                  </button>
-                )}
-                <button className="krg-btn krg-btn-close" onClick={resetModals}>
-                  <FaTimes /> Close
+            {/* ─── FOOTER ─── */}
+            <div className="krg-modal-footer">
+              {history.length > 0 && (
+                <button className="krg-btn krg-btn-back" onClick={closeModal}>
+                  <FaArrowLeft /> Back
                 </button>
-              </div>
-            </>
-          )}
-        </div>
+              )}
+              <button className="krg-btn krg-btn-close" onClick={resetModals}>
+                <FaTimes /> Close
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

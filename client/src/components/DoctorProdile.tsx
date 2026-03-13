@@ -724,12 +724,12 @@ export default function DoctorProfile() {
         }
       `}</style>
 
-      <div className="dp-wrap">
+      <div className="dp-wrap" id ="about">
 
         {/* ═══════════════════════════════
             ① INTRO BAND
         ═══════════════════════════════ */}
-        <section className="dp-section dp-intro" ref={hero.ref} id="about">
+        <section className="dp-section dp-intro" ref={hero.ref}>
           <div className="dp-intro-inner">
 
             {/* left */}
@@ -861,13 +861,13 @@ export default function DoctorProfile() {
           </div>
         </section>
 
-        <div className="dp-divider" />
+        {/* <div className="dp-divider" /> */}
 
         {/* ═══════════════════════════════
             ② AREAS OF EXPERTISE
         ═══════════════════════════════ */}
-        <section className="dp-section dp-exp-bg" ref={expSec.ref}>
-          <div className="dp-exp-header" id="expertise">
+        {/* <section className="dp-section dp-exp-bg" ref={expSec.ref}>
+          <div className="dp-exp-header">
             <div>
               <div className={`dp-eyebrow dp-fade${expSec.inView ? " in" : ""}`}>
                 <span className="dp-eyebrow-dash" />
@@ -901,7 +901,7 @@ export default function DoctorProfile() {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         <div className="dp-divider" />
 

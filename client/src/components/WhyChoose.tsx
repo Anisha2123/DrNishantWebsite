@@ -315,7 +315,7 @@ export default function WhyChoose() {
             </div>
           </div>
         </div>
-
+        
         <div className="wc-grid" ref={grid.ref}>
           {reasons.map((r, i) => (
             <div key={r.n} className={`wc-card${grid.inView ? " in" : ""}`} 

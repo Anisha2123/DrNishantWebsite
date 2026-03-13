@@ -22,7 +22,7 @@ export default function Navbar() {
   { label: "Treatments", id: "services" },
   { label: "Why Choose Us", id: "why-choose" },
   { label: "Dr. Nishant Verma", id: "about" },
-  { label: "Clinical Expertise", id: "expertise" },
+  // { label: "Clinical Expertise", id: "expertise" },
 ];
 
   const handleNavClick = (id) => {

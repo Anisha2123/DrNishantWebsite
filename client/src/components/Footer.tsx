@@ -30,27 +30,30 @@ export default function Footer() {
   { label: "Treatments", id: "services" },
   { label: "Why Choose Us", id: "why-choose" },
   { label: "Dr. Nishant Verma", id: "about" },
-  { label: "Clinical Expertise", id: "expertise" },
+  // { label: "Clinical Expertise", id: "expertise" },
   ];
    
 
   // Service categories
   const services = [
-    "Hip & Knee Replacement",
-    "Arthroscopy",
-    "Trauma Reconstruction",
-    "Limb Salvage",
+    "Hip Replacement",
+    "Knee Replacement",
+    "Arthroscopy – Knee / Shoulder",
+    "Pelvis & Acetabulum Trauma",
+    "Foot & Ankle Surgery",
+    "Ilizarov & Limb Salvage",
+   "Complex Trauma Reconstruction"
   ];
 
   // Areas of expertise
-  const expertise = [
-    "Joint Replacement",
-    "Arthroscopic Surgery",
-    "Trauma Surgery",
-    "Limb Salvage",
-    "Sports Medicine",
-    "Bone Disorders",
-  ];
+  // const expertise = [
+  //   "Hip & Knee Replacement",
+  //   "Arthroscopy – Knee/Shoulder",
+  //  "Pelvis & Acetabulum Trauma",
+  //   "Foot & Ankle Surgery",
+  //   "Illizarov & Limb Salvage",
+  //   "Complex Trauma Reconstruction"
+  // ];
 
   // Social media
   const socials = [
@@ -221,7 +224,7 @@ export default function Footer() {
         ──────────────────────────────────────── */
         .footer-grid {
           display: grid;
-          grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr 1fr;
+          grid-template-columns: 2fr 1.2fr 1.8fr 1fr ;
           gap: 3rem;
           margin-bottom: 3rem;
         }
@@ -296,6 +299,8 @@ export default function Footer() {
 
         .footer-section-services { transition-delay: 0.3s; }
         .footer-section-services.in { opacity: 1; transform: none; }
+
+        
 
         .footer-section-expertise { transition-delay: 0.4s; }
         .footer-section-expertise.in { opacity: 1; transform: none; }
@@ -777,14 +782,14 @@ export default function Footer() {
             </div>
 
             {/* Expertise Section */}
-            <div className={`footer-section footer-section-expertise${visible ? " in" : ""}`}>
+            {/* <div className={`footer-section footer-section-expertise${visible ? " in" : ""}`}>
               <h4 className="footer-section-title">Expertise</h4>
               {expertise.slice(0, 4).map((item) => (
                 <div key={item} className="footer-link">
                   {item}
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Contact Section */}
             <div className={`footer-section footer-section-contact${visible ? " in" : ""}`}>
