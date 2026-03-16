@@ -26,6 +26,19 @@ ul,a{
       so they escape any parent stacking context.
 ═══════════════════════════════════════════════════ */
 
+/* ── Scroll spacer — sits as the last element in
+   normal flow, pushes content above the pill bar  */
+.misso-scroll-spacer {
+  display: block;
+  height: 88px;
+  width: 100%;
+  pointer-events: none;
+  aria-hidden: true;
+}
+@media (min-width: 768px) {
+  .misso-scroll-spacer { height: 96px; }
+}
+
 /* ── Pill Bar ──────────────────────────────────── */
 .misso-bar {
   position: fixed;

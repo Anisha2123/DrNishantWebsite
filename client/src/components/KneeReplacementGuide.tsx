@@ -182,6 +182,12 @@ export default function KneeReplacementGuide() {
            Side-by-side: Image Left | Content Right
         ───────────────────────────── */
         @media (min-width: 1024px) {
+        .krg-modal-body-mobile,
+.krg-modal-body-mobile-direct,
+.krg-modal-image-mobile-tab,
+.krg-modal-content-mobile-tab {
+  display: none !important;
+}
 
         
           .krg-modal {
