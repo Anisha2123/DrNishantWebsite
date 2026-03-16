@@ -7,6 +7,7 @@ import DoctorProfile from './components/DoctorProdile'
 import Navbar from './components/Navbar'
 import Footer from "./components/Footer"
 import KneeReplacementGuide from './components/KneeReplacementGuide'
+import MISSOStickyModal from './components/MISSOStickyModal'
 // import KneeReplacementGuide from './components/Kneeplacementguide'
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +22,7 @@ function App() {
       <DoctorProfile/>
       <KneeReplacementGuide />
       {/* <KneeReplacementguide /> */}
+      <MISSOStickyModal />
     <Footer />
     </>
   )
