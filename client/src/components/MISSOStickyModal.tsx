@@ -869,7 +869,7 @@ export default function MISSOStickyModal() {
               <h2 className="msm-left-title">Surgical Precision,<br /><em>Reimagined</em></h2>
               <p className="msm-left-sub">Robotic guidance + 3D CT planning = a knee replacement built around you.</p>
 
-              <div className="msm-left-stats">
+              {/* <div className="msm-left-stats">
                 {[
                   { val: "<1mm",  label: "Accuracy"     },
                   { val: "3D CT", label: "Pre-op Plan"  },
@@ -881,7 +881,7 @@ export default function MISSOStickyModal() {
                     <span className="msm-left-stat-l">{s.label}</span>
                   </div>
                 ))}
-              </div>
+              </div> */}
 
               <nav className="msm-tab-nav-desktop" role="tablist">
                 {TABS.map(t => (
