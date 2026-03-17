@@ -91,7 +91,7 @@ export default function MISSOStickyModal() {
       <div className="msm-stats-grid">
         {[
           { val: "<1mm",  label: "Accuracy"      },
-          { val: "3D CT Scan", label: "Pre-op Plan"   },
+          { val: "3D CT", label: "Pre-op Plan"   },
           { val: "100%",  label: "Personalised"  },
           { val: "5",     label: "Step Process"  },
         ].map((s, i) => (
@@ -216,7 +216,9 @@ export default function MISSOStickyModal() {
     /* ── Trigger Button ─────────────────────────────── */
     .msm-trigger-wrap {
       position: fixed;
-      bottom: 1.5rem;
+      /* Mobile: sit above the KneeReplacementGuide button (~44px at bottom:1rem).
+         6rem gives clearance: 44px + 1rem gap + 1rem KRG bottom offset.  */
+      bottom: 6rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 999;
@@ -228,12 +230,23 @@ export default function MISSOStickyModal() {
     }
 
     @keyframes msmBarIn {
-      from { opacity: 0; bottom: -3rem; }
-      to   { opacity: 1; bottom: 1.5rem; }
+      from { opacity: 0; bottom: 2rem; }
+      to   { opacity: 1; bottom: 6rem; }
     }
 
+    /* Tablet+: KRG button is bottom-right corner only, MISSO pill sits
+       at normal height in the center — no overlap.                      */
     @media (min-width: 768px) {
-      .msm-trigger-wrap { max-width: 540px; }
+      .msm-trigger-wrap {
+        bottom: 1.5rem;
+        max-width: 540px;
+        animation-name: msmBarInDesktop;
+      }
+    }
+
+    @keyframes msmBarInDesktop {
+      from { opacity: 0; bottom: -2rem; }
+      to   { opacity: 1; bottom: 1.5rem; }
     }
 
     .msm-pill {
@@ -317,10 +330,14 @@ export default function MISSOStickyModal() {
     /* ── Spacer (normal flow, pushes Footer clear) ───── */
     .msm-spacer {
       display: block;
-      height: 88px;
+      /* Mobile: pill is at bottom:6rem (~96px), add pill height ~52px = ~148px */
+      height: 152px;
       pointer-events: none;
     }
-    @media (min-width: 768px) { .msm-spacer { height: 96px; } }
+    @media (min-width: 768px) {
+      /* Tablet+: pill back to bottom:1.5rem, normal clearance */
+      .msm-spacer { height: 96px; }
+    }
 
     /* ── Backdrop ────────────────────────────────────── */
     .msm-backdrop {
@@ -855,7 +872,7 @@ export default function MISSOStickyModal() {
               <div className="msm-left-stats">
                 {[
                   { val: "<1mm",  label: "Accuracy"     },
-                  { val: "3D CT Scan", label: "Pre-op Plan"  },
+                  { val: "3D CT", label: "Pre-op Plan"  },
                   { val: "100%",  label: "Personalised" },
                   { val: "5",     label: "Steps"        },
                 ].map((s, i) => (
