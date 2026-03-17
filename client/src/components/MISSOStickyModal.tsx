@@ -13,7 +13,7 @@ const TABS: { id: TabId; label: string }[] = [
 
 /* Image paths — served from /public/images/Robotic/ */
 const IMG = {
-  main:  "/images/Robotic/image.png",
+  main:  "/images/Robotic/img3.jpeg",
   img1:  "/images/Robotic/img1.jpeg",
   img2:  "/images/Robotic/img2.jpeg",
   img3:  "/images/Robotic/img3.jpeg",
