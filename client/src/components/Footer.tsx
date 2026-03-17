@@ -12,6 +12,15 @@
 import { useState, useEffect } from "react";
 import { FaInstagram, FaPhone, FaFacebook, FaYoutube, FaLocationArrow, FaMailBulk, FaTimes } from "react-icons/fa";
 import "../App.css";
+const serviceMap: Record<string, number> = {
+  "Hip Replacement": 1,
+  "Knee Replacement": 2,
+  "Arthroscopy – Knee / Shoulder": 3,
+  "Pelvis & Acetabulum Trauma": 4,
+  "Foot & Ankle Surgery": 5,
+  "Ilizarov & Limb Salvage": 6,
+  "Complex Trauma Reconstruction": 7
+};
 
 export default function Footer() {
   const [visible, setVisible] = useState(false);
@@ -34,16 +43,15 @@ export default function Footer() {
   ];
    
 
-  // Service categories
   const services = [
-    "Hip Replacement",
-    "Knee Replacement",
-    "Arthroscopy – Knee / Shoulder",
-    "Pelvis & Acetabulum Trauma",
-    "Foot & Ankle Surgery",
-    "Ilizarov & Limb Salvage",
-   "Complex Trauma Reconstruction"
-  ];
+  { name: "Hip Replacement", id: "hip" },
+  { name: "Knee Replacement", id: "knee" },
+  { name: "Arthroscopy – Knee / Shoulder", id: "arthroscopy" },
+  { name: "Pelvis & Acetabulum Trauma", id: "pelvis" },
+  { name: "Foot & Ankle Surgery", id: "foot" },
+  { name: "Ilizarov & Limb Salvage", id: "ilizarov" },
+  { name: "Complex Trauma Reconstruction", id: "trauma" }
+];   
 
   // Areas of expertise
   // const expertise = [
@@ -773,13 +781,31 @@ export default function Footer() {
 
             {/* Services Section */}
             <div className={`footer-section footer-section-services${visible ? " in" : ""}`}>
-              <h4 className="footer-section-title">Services</h4>
-              {services.map((service) => (
-                <div key={service} className="footer-link">
-                  {service}
-                </div>
-              ))}
-            </div>
+  <h4 className="footer-section-title">Services</h4>
+
+  {services.map((service) => (
+    <div
+      key={service.id}
+      className="footer-link cursor-pointer"
+      onClick={() => {
+  const id = serviceMap[service.name];
+
+  // Scroll to section
+  const section = document.getElementById("services");
+  section?.scrollIntoView({ behavior: "smooth" });
+
+  // Activate correct service
+  setTimeout(() => {
+    window.dispatchEvent(
+      new CustomEvent("selectService", { detail: id })
+    );
+  }, 400);
+}}
+    >
+      {service.name}
+    </div>
+  ))}
+</div>
 
             {/* Expertise Section */}
             {/* <div className={`footer-section footer-section-expertise${visible ? " in" : ""}`}>

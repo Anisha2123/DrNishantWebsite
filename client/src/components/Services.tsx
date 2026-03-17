@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PRIMARY = "#2D8C7F";
 const PRIMARY_DARK = "#1F6B61";
@@ -385,9 +385,11 @@ const services = [
   },
 ];
 
+
 type Service = (typeof services)[0];
 
 function ServiceCard({ service, isActive, onClick }: { service: Service; isActive: boolean; onClick: () => void }) {
+  
   return (
     <button
       onClick={onClick}
@@ -567,7 +569,15 @@ export default function DrNishantServices() {
   const [activeId, setActiveId] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const active = services.find((s) => s.id === activeId)!;
+  useEffect(() => {
+  const handler = (e: any) => {
+    setActiveId(e.detail);
+  };
 
+  window.addEventListener("selectService", handler);
+
+  return () => window.removeEventListener("selectService", handler);
+}, []);
   return (
     <>
       <style>{`
