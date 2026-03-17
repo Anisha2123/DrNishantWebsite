@@ -265,9 +265,9 @@ export default function Navbar() {
 
           {/* Call & Toggle */}
           <div className="nav-actions">
-            <a href="tel:+918837667062" className="phone-btn">
+            <a href="tel:9416091718" className="phone-btn">
               <FaPhone size={14} />
-              <span>+91 88376 67062</span>
+              <span>+91 9416 0917 18</span>
             </a>
             <button 
               className="menu-toggle" 

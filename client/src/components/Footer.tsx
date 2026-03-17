@@ -93,7 +93,7 @@ export default function Footer() {
         <p>Your personal information is contained behind secured networks and is only accessible by a limited number of persons who have special access rights to such systems.</p>
         
         <h4>5. Contact Us</h4>
-        <p>If you have questions or concerns regarding this Privacy Policy, please contact us at drnishantverma422@gmail.com or +91 8837 667062.</p>
+        <p>If you have questions or concerns regarding this Privacy Policy, please contact us at drnishantverma422@gmail.com or +91 9416 0917 18.</p>
       `
     },
     terms: {
@@ -798,7 +798,7 @@ export default function Footer() {
               <div className="footer-contact-item">
                 <div className="footer-contact-label">Phone</div>
                 <div className="footer-contact-value">
-                  <a href="tel:+918837667062">+91 8837 667062</a>
+                  <a href="tel:9416091718">91 9416 0917 18</a>
                 </div>
               </div>
 

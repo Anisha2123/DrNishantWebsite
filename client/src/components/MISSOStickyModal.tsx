@@ -274,9 +274,14 @@ export default function MISSOStickyModal() {
       </div>
 
       <div className="msm-doc-actions">
-        <button className="msm-cta-primary">Book Consultation</button>
-        <button className="msm-cta-secondary">Learn More</button>
-      </div>
+  <a href="tel:9416091718">
+    <button className="msm-cta-primary">Book Consultation</button>
+  </a>
+
+  <a href="tel:9416091718">
+    <button className="msm-cta-secondary">Learn More</button>
+  </a>
+</div>
     </div>
   );
 
@@ -763,7 +768,10 @@ export default function MISSOStickyModal() {
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
                   Close
                 </button>
-                <button className="msm-footer-book">Book Consultation</button>
+                <a href="tel:9416091718">
+                  <button className="msm-footer-book">Book Consultation</button>
+                </a>
+                
               </div>
             </div>
 
@@ -773,7 +781,10 @@ export default function MISSOStickyModal() {
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
                 Close
               </button>
-              <button className="msm-footer-book">Book Consultation</button>
+               <a href="tel:9416091718">
+                  <button className="msm-footer-book">Book Consultation</button>
+               </a>
+              
             </div>
 
           </div>

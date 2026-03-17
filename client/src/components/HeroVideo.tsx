@@ -111,6 +111,7 @@ export default function HeroVideo() {
     @media (min-width: 768px) { .hv-d { display: block; } }
 
     .hv-d-video {
+    pointer-events: none;
       position: absolute;
       inset: 0;
       width: 100%;
