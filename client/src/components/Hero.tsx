@@ -11,7 +11,8 @@ const expertise = [
 export default function HeroSection() {
   const [visible, setVisible] = useState(false);
   const [typedText, setTypedText] = useState("");
-  const fullText = "Consultant Orthopaedic Surgeon";
+  const fullText = "Best Orthopedic Doctor in Hisar";
+  // <h1>Best Orthopedic Doctor in Hisar</h1>
   const heroRef = useRef(null);
 
   useEffect(() => {
